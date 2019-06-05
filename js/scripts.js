@@ -15,3 +15,7 @@ var repository = [
   0.5,
   ['Fairy', 'Normal']],
   ];
+
+  for (var i = 0; i < repository.length; i++){
+    document.write('<p>' + repository[i][0]  +  ' (height: ' + repository[i][1] + ')' + '<p>');
+  }
