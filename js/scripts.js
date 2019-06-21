@@ -16,9 +16,13 @@ var repository = [
   types: ['fairy', ' normal']},
   ];
 
-  for (var i = 0; i < repository.length; i++){
-    document.write('<p>' + repository[i].name + '<br>' + repository[i].types + '<br>' +  'height: ' + repository[i].height + '<p>');
-   if (repository[i].height >= 0.8) {
-        document.write('Wow, that\'s big!');
-    }
-  }
+
+
+
+
+ repository.forEach(function(pokemon){
+  document.write('<p>' + pokemon.name + '<br>' + pokemon.types + '<br>' + pokemon.height + '<br>' + '</p>');
+  if (pokemon.height >= 0.8) {
+       document.write('Wow, that\'s big!');
+     }
+});
