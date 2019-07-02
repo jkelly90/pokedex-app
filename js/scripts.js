@@ -1,3 +1,5 @@
+
+var pokemonRepository = (function () {
 var repository = [
   {name: 'Bulbasaur',
   height: 0.7,
@@ -16,11 +18,24 @@ var repository = [
   types: ['fairy', ' normal']},
   ];
 
+  function add(pokemon) {
+    repository.push(pokemon);
+  }
+
+  function getAll() {
+    return repository;
+  }
+
+  return {
+    add: add,
+    getAll: getAll,
+  };
+})();
 
 
 
 
- repository.forEach(function(pokemon){
+ pokemonRepository.getAll().forEach(function(pokemon){
   document.write('<p>' + pokemon.name + '<br>' + pokemon.types + '<br>' + pokemon.height + '<br>' + '</p>');
   if (pokemon.height >= 0.8) {
        document.write('Wow, that\'s big!');
