@@ -29,6 +29,12 @@ li {
   font-weight: 800;
 }
 
+.button:hover {
+  background-color: lightgray;
+  cursor: pointer;
+}
+
+
 #pokedex-container {
   text-align: center;
 }
