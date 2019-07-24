@@ -16,10 +16,7 @@ var repository = [];
     });
   }
 
-function showDetails(item) {
-  pokemonRepository.loadDetails(item).then(function () {
-    console.log(item);   });
-}
+
 
   function add(pokemon) {
     repository.push(pokemon);
@@ -64,12 +61,87 @@ function loadDetails(item) {
     });
 }
 
+function showDetails(item) {
+  pokemonRepository.loadDetails(item).then(function () {
+    showModal(item);
+  });
+}
+
+function showModal(item) {
+var $modalContainer = document.querySelector('#modal-container');
+
+// clear all existing modal content
+//$modalContainer.innerHTML = '';
+
+// create div element in DOM
+var modal = document.createElement('div');
+//add class
+modal.classList.add('modal');
+
+//add closing button
+var closeButtonElement = document.createElement('button');
+closeButtonElement.classList.add('modal-close');
+closeButtonElement.innerText = 'Close';
+closeButtonElement.addEventListener('click', hideModal);
+
+// modal name element
+var nameElement = document.createElement('h1');
+nameElement.innerText = item.name;
+
+// modal image
+var imageElement = document.createElement('img');
+imageElement.classList.add('modal-img');
+imageElement.setAttribute('src', item.imageUrl);
+
+// modal height element
+var heightElement = document.createElement('p');
+heightElement.innerText = 'height: ' + item.height;
+
+// appending modal content
+modal.appendChild(closeButtonElement);
+modal.appendChild(nameElement);
+modal.appendChild(imageElement);
+modal.appendChild(heightElement);
+$modalContainer.appendChild(modal);
+
+$modalContainer.classList.add('is-visible');
+}
+
+//hide modal with close button
+function hideModal() {
+  var $modalContainer = document.querySelector('#modal-container');
+  $modalContainer.classList.remove('is-visible');
+}
+
+// hide modal with ESC
+window.addEventListener('keydown', e => {
+  var $modalContainer = document.querySelector('#modal-container');
+  if (
+    e.key === 'Escape' && $modalContainer.classList.contains('is-visible')
+  ) {
+    hideModal();
+  }
+});
+
+// hide modal by clicking outside
+ var $modalContainer = document.querySelector('#modalContainer');
+$modalContainer.addEventListener('click', e => {
+  var target = e.target;
+  if (target === $modalContainer) {
+    hideModal();
+  }
+});
+
+
 return {
   add: add,
   getAll: getAll,
   addListItem: addListItem,
+  showDetails: showDetails,
   loadList: loadList,
-  loadDetails: loadDetails
+  loadDetails: loadDetails,
+  showModal: showModal,
+  hideModal: hideModal
 };
 })();
 

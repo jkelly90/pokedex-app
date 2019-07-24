@@ -38,3 +38,11 @@ li {
 #pokedex-container {
   text-align: center;
 }
+
+#modaContainer {
+  display: none;
+}
+
+#modalContainer.is-visible {
+  display: block;
+}
