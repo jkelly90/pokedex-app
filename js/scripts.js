@@ -35,7 +35,7 @@ function loadList() {
       json.results.forEach(function(item) {
         var pokemon = {
           name: item.name,
-          detailsUrl: item.url
+          detailsUrl: item.url,
         };
         add(pokemon);
       });
@@ -54,11 +54,12 @@ function loadDetails(item) {
     .then(function(details) {
       item.imageUrl = details.sprites.front_default;
       item.height = details.height;
-      item.types = Object.keys(details.types);
+      item.type = Object.keys(details.types);
     })
     .catch(function(e) {
       console.error(e);
     });
+
 }
 
 function showDetails(item) {
@@ -71,7 +72,7 @@ function showModal(item) {
 var $modalContainer = document.querySelector('#modal-container');
 
 // clear all existing modal content
-//$modalContainer.innerHTML = '';
+$modalContainer.innerHTML = '';
 
 // create div element in DOM
 var modal = document.createElement('div');
@@ -82,7 +83,7 @@ modal.classList.add('modal');
 var closeButtonElement = document.createElement('button');
 closeButtonElement.classList.add('modal-close');
 closeButtonElement.innerText = 'Close';
-closeButtonElement.addEventListener('click', hideModal);
+closeButtonElement.addEventListener('click', e => hideModal());
 
 // modal name element
 var nameElement = document.createElement('h1');
@@ -97,11 +98,15 @@ imageElement.setAttribute('src', item.imageUrl);
 var heightElement = document.createElement('p');
 heightElement.innerText = 'height: ' + item.height;
 
+var typeElement = document.createElement('p');
+typeElement.innerText = 'type: ' + item.type;
+
 // appending modal content
 modal.appendChild(closeButtonElement);
 modal.appendChild(nameElement);
 modal.appendChild(imageElement);
 modal.appendChild(heightElement);
+modal.appendChild(typeElement);
 $modalContainer.appendChild(modal);
 
 $modalContainer.classList.add('is-visible');
@@ -110,6 +115,11 @@ $modalContainer.classList.add('is-visible');
 //hide modal with close button
 function hideModal() {
   var $modalContainer = document.querySelector('#modal-container');
+  var child = $modalContainer.lastElementChild;
+  while (child) {
+    $modalContainer.removeChild(child);
+    child = $modalContainer.lastElementChild;
+  }
   $modalContainer.classList.remove('is-visible');
 }
 
@@ -124,7 +134,7 @@ window.addEventListener('keydown', e => {
 });
 
 // hide modal by clicking outside
- var $modalContainer = document.querySelector('#modalContainer');
+var $modalContainer = document.querySelector('#modal-container');
 $modalContainer.addEventListener('click', e => {
   var target = e.target;
   if (target === $modalContainer) {
@@ -141,7 +151,7 @@ return {
   loadList: loadList,
   loadDetails: loadDetails,
   showModal: showModal,
-  hideModal: hideModal
+  hideModal: hideModal,
 };
 })();
 
