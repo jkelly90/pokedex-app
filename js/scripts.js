@@ -54,7 +54,7 @@ function loadDetails(item) {
     .then(function(details) {
       item.imageUrl = details.sprites.front_default;
       item.height = details.height;
-      item.type = Object.keys(details.types);
+      item.type = details.types.map(type => type.type.name);
     })
     .catch(function(e) {
       console.error(e);
